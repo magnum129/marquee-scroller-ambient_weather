@@ -1,0 +1,7 @@
+You'll need this:
+https://github.com/Qrome/marquee-scroller
+
+
+https://dashboard.ambientweather.net
+
+And you can replace the OpenWeatherMap files with these. You'll need an API key from Ambient Weather, and you will need to set the name of your weather station to whatever you want to scroll as the location, and the weather station location to: latitude, longitude
