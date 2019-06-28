@@ -123,7 +123,7 @@ void OpenWeatherMapClient::updateWeather() {
   }
 
   
-  if(weathers[inx].temp.toInt() > 90) { // Hot
+  if(weathers[inx].temp.toInt() > 81) { // Hot
     if(weathers[inx].humidity.toInt() > 95) { // Hot & Raining
       description = description + "HOT AND MAYBE RAINING!";
     } else if(weathers[inx].humidity.toInt() <= 95 && weathers[inx].humidity.toInt() > 60) { // Hot and Humid
@@ -142,7 +142,7 @@ void OpenWeatherMapClient::updateWeather() {
   } else if(weathers[inx].temp.toInt() <= 32 && weathers[inx].temp.toInt() > 25) { // Cold
     if(weathers[inx].humidity.toInt() > 80) { // Cold and Snowing
       description = description + "SNOWING MAYBE";
-    } else if(weathers[inx].humidity.toInt() <= 80 && weathers[inx].humidity.toInt() > 50) { // Hot and Humid
+    } else if(weathers[inx].humidity.toInt() <= 80 && weathers[inx].humidity.toInt() > 50) { // Winter like
       description = description + "PROBABLY WINTER LIKE";
     } else {
       description = description + "PROBABLY WINTER LIKE";
@@ -150,7 +150,7 @@ void OpenWeatherMapClient::updateWeather() {
   } else { // Really Cold
     if(weathers[inx].humidity.toInt() > 80) { // Cold and ICE
       description = description + "ICE FALLING FROM THE SKY MAYBE";
-    } else if(weathers[inx].humidity.toInt() <= 80 && weathers[inx].humidity.toInt() > 50) { // Hot and Humid
+    } else if(weathers[inx].humidity.toInt() <= 80 && weathers[inx].humidity.toInt() > 50) { // Cold
       description = description + "COLD!";
     } else {
       description = description + "COLD!";
