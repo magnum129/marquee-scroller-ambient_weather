@@ -123,7 +123,7 @@ void OpenWeatherMapClient::updateWeather() {
   }
 
   
-  if(weathers[inx].temp.toInt() > 81) { // Hot
+  if(weathers[inx].temp.toInt() > 80) { // Hot
     if(weathers[inx].humidity.toInt() > 95) { // Hot & Raining
       description = description + "HOT AND MAYBE RAINING!";
     } else if(weathers[inx].humidity.toInt() <= 95 && weathers[inx].humidity.toInt() > 60) { // Hot and Humid
