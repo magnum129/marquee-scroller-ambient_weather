@@ -62,8 +62,6 @@ public:
   void updateCityIdList(int CityIDs[], int cityCount);
   void setMetric(boolean isMetric);
 
-  String midString(String str, String start, String finish);
-  
   String getLat(int index);
   String getLon(int index);
   String getDt(int index);
