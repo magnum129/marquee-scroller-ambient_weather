@@ -70,6 +70,8 @@ void OpenWeatherMapClient::updateWeather() {
     return;
   }
 
+
+
   // Skip HTTP headers
   char endOfHeaders[] = "\r\n\r\n";
   if (!weatherClient.find(endOfHeaders)) {
@@ -77,11 +79,17 @@ void OpenWeatherMapClient::updateWeather() {
     return;
   }
 
+  weatherClient.readBytesUntil('[{', status, sizeof(status));
+
+  String weatherClientData = "[{" + weatherClient.readStringUntil(']') + "]";
+  Serial.println(weatherClientData);
+
+
   const size_t bufferSize = 710;
   DynamicJsonBuffer jsonBuffer(bufferSize);
 
   // Parse JSON objectarray
-  JsonArray& root = jsonBuffer.parseArray(weatherClient);
+  JsonArray& root = jsonBuffer.parseArray(weatherClientData);
   if (!root.success()) {
     Serial.println(F("Weather Data Parsing failed!"));
     weathers[0].error = "Weather Data Parsing failed!";
@@ -114,7 +122,7 @@ void OpenWeatherMapClient::updateWeather() {
   weathers[inx].weatherId = "weatherId";
 
   String description = "";
-  if(weathers[inx].wind.toInt() > 20) {
+  if (weathers[inx].wind.toInt() > 20) {
     description = "REALLY WINDY AND ";
   } else if (weathers[inx].wind.toInt() <= 20 && weathers[inx].wind.toInt() > 5) {
     description = "KINDA WINDY AND ";
@@ -122,35 +130,35 @@ void OpenWeatherMapClient::updateWeather() {
     description = "";
   }
 
-  
-  if(weathers[inx].temp.toInt() > 80) { // Hot
-    if(weathers[inx].humidity.toInt() > 95) { // Hot & Raining
+
+  if (weathers[inx].temp.toInt() > 80) { // Hot
+    if (weathers[inx].humidity.toInt() > 95) { // Hot & Raining
       description = description + "HOT AND MAYBE RAINING!";
-    } else if(weathers[inx].humidity.toInt() <= 95 && weathers[inx].humidity.toInt() > 60) { // Hot and Humid
+    } else if (weathers[inx].humidity.toInt() <= 95 && weathers[inx].humidity.toInt() > 60) { // Hot and Humid
       description = description + "HOT AND HUMID!";
     } else {
       description = description + "HOT!";
     }
-  } else if(weathers[inx].temp.toInt() <= 80 && weathers[inx].temp.toInt() > 33) { // Okay
-    if(weathers[inx].humidity.toInt() > 95) { // Raining
+  } else if (weathers[inx].temp.toInt() <= 80 && weathers[inx].temp.toInt() > 33) { // Okay
+    if (weathers[inx].humidity.toInt() > 95) { // Raining
       description = description + "MAYBE RAINING";
-    } else if(weathers[inx].humidity.toInt() <= 95 && weathers[inx].humidity.toInt() > 60) { // Humid
+    } else if (weathers[inx].humidity.toInt() <= 95 && weathers[inx].humidity.toInt() > 60) { // Humid
       description = description + "HUMID";
     } else {
       description = description + "OKAY'ish";
-    }   
-  } else if(weathers[inx].temp.toInt() <= 32 && weathers[inx].temp.toInt() > 25) { // Cold
-    if(weathers[inx].humidity.toInt() > 80) { // Cold and Snowing
+    }
+  } else if (weathers[inx].temp.toInt() <= 32 && weathers[inx].temp.toInt() > 25) { // Cold
+    if (weathers[inx].humidity.toInt() > 80) { // Cold and Snowing
       description = description + "SNOWING MAYBE";
-    } else if(weathers[inx].humidity.toInt() <= 80 && weathers[inx].humidity.toInt() > 50) { // Winter like
+    } else if (weathers[inx].humidity.toInt() <= 80 && weathers[inx].humidity.toInt() > 50) { // Winter like
       description = description + "PROBABLY WINTER LIKE";
     } else {
       description = description + "PROBABLY WINTER LIKE";
     }
   } else { // Really Cold
-    if(weathers[inx].humidity.toInt() > 80) { // Cold and ICE
+    if (weathers[inx].humidity.toInt() > 80) { // Cold and ICE
       description = description + "ICE FALLING FROM THE SKY MAYBE";
-    } else if(weathers[inx].humidity.toInt() <= 80 && weathers[inx].humidity.toInt() > 50) { // Cold
+    } else if (weathers[inx].humidity.toInt() <= 80 && weathers[inx].humidity.toInt() > 50) { // Cold
       description = description + "COLD!";
     } else {
       description = description + "COLD!";
